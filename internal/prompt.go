@@ -22,5 +22,5 @@ func GenTextPrompt(cfg Config) string {
 	prompt_subject := subject[rand.Intn(len(subject))]
 	prompt_action := action[rand.Intn(len(action))]
 
-	return fmt.Sprintf("Write me a blog post about %s and how they %s", prompt_subject, prompt_action)
+	return fmt.Sprintf("Write me a hypothetical blog post about %s and how they %s", prompt_subject, prompt_action)
 }
