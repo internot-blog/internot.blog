@@ -27,19 +27,19 @@ func genFrontMatter(resp string) string {
 	lines := strings.Split(resp, "\n")
 	for _, line := range lines {
 		trimmedLine := strings.Trim(line, ` #"*'`)
-		strings.ReplaceAll(line, "\"", "\\\"")
 		if len(trimmedLine) == 0 {
 			continue
 		}
 
 		parts := strings.FieldsFunc(trimmedLine, func(r rune) bool {
-			// TEST: make sure these are the best chars to split on (;,?)
 			return strings.ContainsRune(".:", r)
 		})
 
+		title = strings.ReplaceAll(parts[0], "\"", "\\\"")
 		title = parts[0]
+
 		if len(parts) > 1 {
-			desc = strings.TrimSpace(parts[1])
+			desc = strings.TrimSpace(strings.ReplaceAll(parts[1], "\"", "\\\""))
 		}
 
 		break
@@ -73,8 +73,6 @@ func genFrontMatter(resp string) string {
 // TODO: do any other required post-processing here
 func FormtTextResponse(resp string) string {
 	frontMatter := genFrontMatter(resp)
-
-	// TODO: remove the first line (its used as the header)
 
 	return fmt.Sprintf("%s\n%s", frontMatter, resp)
 }

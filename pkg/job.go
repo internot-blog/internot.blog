@@ -23,15 +23,15 @@ func MakePost(cfg internal.Config) (string, error) {
 		return "", err
 	}
 
-	seed := rand.Int63()
-	width := 512
-	height := 512
-	steps := 10
-
-	err = MakeImage(cfg, fmt.Sprintf("%s/image.%d.png", postDir, seed), prompt, seed, width, height, steps)
-	if err != nil {
-		return "", err
-	}
+	// seed := rand.Int63()
+	// width := 512
+	// height := 512
+	// steps := 10
+	//
+	// err = MakeImage(cfg, fmt.Sprintf("%s/image.%d.png", postDir, seed), prompt, seed, width, height, steps)
+	// if err != nil {
+	// 	return "", err
+	// }
 
 	fmt.Printf("\n---------------\nCreated post in %s\n", postDir)
 
