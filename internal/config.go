@@ -18,7 +18,6 @@ type PromptConfig struct {
 	TextPromptAction   []string `json:"text_prompt_action"`
 	ImagePromptSubject []string `json:"image_prompt_subject"`
 	ImagePromptAction  []string `json:"image_prompt_action"`
-	// TODO: add (optional) text prompt starter maybe?
 }
 
 type Config struct {

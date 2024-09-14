@@ -62,7 +62,6 @@ type textResponse struct {
 	} `json:"message"`
 }
 
-// TODO:
 func GenImage(config Config, prompt string, seed int64, width int, height int, steps int, guidance float64) ([]byte, error) {
 	// Prepare the payload
 	payload := imagePayload{
@@ -132,7 +131,6 @@ func GenImage(config Config, prompt string, seed int64, width int, height int, s
 	return imageData, nil
 }
 
-// TODO:
 func GenText(config Config, prompt string) (string, error) {
 	payload := textPayload{
 		Model: "CognitiveComputations/dolphin-llama3.1:8b",

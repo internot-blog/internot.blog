@@ -26,3 +26,5 @@ go.work.sum
 vars.sh
 
 generated_image.png
+posts/*
+out.txt

@@ -1,26 +1,48 @@
 package internal
 
 import (
+	"bytes"
 	"fmt"
 	"math/rand"
+	"text/template"
 )
 
 func GenImagePrompt(cfg Config) string {
 	subject := cfg.PromptConfig.ImagePromptSubject
 	action := cfg.PromptConfig.ImagePromptAction
 
-	prompt_subject := subject[rand.Intn(len(subject))]
-	prompt_action := action[rand.Intn(len(action))]
+	promptSubject := subject[rand.Intn(len(subject))]
+	promptAction := action[rand.Intn(len(action))]
 
-	return fmt.Sprintf("Generate me an ad for %s where %s is %s", prompt_subject, prompt_subject, prompt_action)
+	return fmt.Sprintf("Generate me an ad for %s where %s is %s", promptSubject, promptSubject, promptAction)
 }
 
 func GenTextPrompt(cfg Config) string {
 	subject := cfg.PromptConfig.TextPromptSubject
 	action := cfg.PromptConfig.TextPromptAction
 
-	prompt_subject := subject[rand.Intn(len(subject))]
-	prompt_action := action[rand.Intn(len(action))]
+	promptSubject := subject[rand.Intn(len(subject))]
+	promptActioin := action[rand.Intn(len(action))]
 
-	return fmt.Sprintf("Write me a hypothetical and satirical blog post about %s and how they %s", prompt_subject, prompt_action)
+	tmpl, err := template.ParseFiles("templates/prompt.txt")
+	// tmpl, err := template.ParseFiles("../templates/prompt.txt")
+	if err != nil {
+		panic(fmt.Sprintln("Error reading templates/prompt.txt: ", err))
+	}
+
+	data := struct {
+		PromptSubject string
+		PromptAction  string
+	}{
+		PromptSubject: promptSubject,
+		PromptAction:  promptActioin,
+	}
+
+	var result bytes.Buffer
+	err = tmpl.Execute(&result, data)
+	if err != nil {
+		panic(fmt.Sprintln("Error executing template: ", err))
+	}
+
+	return result.String()
 }

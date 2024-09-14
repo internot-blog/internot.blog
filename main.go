@@ -17,8 +17,10 @@ func MakeText(cfg internal.Config, textFilename string, prompt string) {
 		return
 	}
 
-	internal.SaveText(response, textFilename)
-	fmt.Println(response)
+	formattedResponse := internal.FormtTextResponse(response)
+
+	internal.SaveText(formattedResponse, textFilename)
+	fmt.Println(formattedResponse)
 }
 
 func MakeImage(cfg internal.Config, imageFilename string, prompt string, seed int64) {
