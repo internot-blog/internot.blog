@@ -26,7 +26,8 @@ func genFrontMatter(resp string) string {
 	var desc string
 	lines := strings.Split(resp, "\n")
 	for _, line := range lines {
-		trimmedLine := strings.Trim(line, " #\"'")
+		trimmedLine := strings.Trim(line, ` #"*'`)
+		strings.ReplaceAll(line, "\"", "\\\"")
 		if len(trimmedLine) == 0 {
 			continue
 		}
@@ -55,7 +56,7 @@ func genFrontMatter(resp string) string {
 	}{
 		Title:       title,
 		Description: desc,
-		Date:        time.Now().String(),
+		Date:        time.Now().Format("2006-01-02"),
 		Tags:        keywords,
 		Categories:  categories[rand.Intn(len(categories))],
 	}
