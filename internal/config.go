@@ -41,7 +41,7 @@ func ReadPromptFile(promptPath string) PromptConfig {
 	return out
 }
 
-func FetchConfig() ModelConfig {
+func GetModelConfig() ModelConfig {
 	user := os.Getenv("AUTH_USER")
 	if user == "" {
 		panic("Error: Environment variable 'AUTH_USER' not set.")
@@ -67,5 +67,12 @@ func FetchConfig() ModelConfig {
 		Password:      pass,
 		TextEndpoint:  imgUrl,
 		ImageEndpoint: txtUrl,
+	}
+}
+
+func GetConfig(promptPath string) Config {
+	return Config{
+		ModelConfig:  GetModelConfig(),
+		PromptConfig: ReadPromptFile(promptPath),
 	}
 }
