@@ -150,7 +150,7 @@ func GenText(config Config, prompt string) (string, error) {
 	}
 
 	// Create HTTP request with basic authentication
-	req, err := http.NewRequest("POST", config.ModelConfig.TextEndpoint, bytes.NewBuffer(jsonPayload))
+	req, err := http.NewRequest("POST", config.ModelConfig.TextEndpoint+"/api/chat", bytes.NewBuffer(jsonPayload))
 	if err != nil {
 		return "", fmt.Errorf("failed to create request: %w", err)
 	}

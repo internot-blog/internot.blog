@@ -65,8 +65,8 @@ func GetModelConfig() ModelConfig {
 	return ModelConfig{
 		User:          user,
 		Password:      pass,
-		TextEndpoint:  imgUrl,
-		ImageEndpoint: txtUrl,
+		TextEndpoint:  txtUrl,
+		ImageEndpoint: imgUrl,
 	}
 }
 
