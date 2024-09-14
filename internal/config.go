@@ -42,23 +42,23 @@ func ReadPromptFile(promptPath string) PromptConfig {
 }
 
 func GetModelConfig() ModelConfig {
-	user := os.Getenv("AUTH_USER")
-	if user == "" {
+	user, exists := os.LookupEnv("AUTH_USER")
+	if !exists {
 		panic("Error: Environment variable 'AUTH_USER' not set.")
 	}
 
-	pass := os.Getenv("AUTH_PASS")
-	if pass == "" {
+	pass, exists := os.LookupEnv("AUTH_PASS")
+	if !exists {
 		panic("Error: Environment variable 'AUTH_PASS' not set.")
 	}
 
-	txtUrl := os.Getenv("OLLAMA_URL")
-	if txtUrl == "" {
+	txtUrl, exists := os.LookupEnv("OLLAMA_URL")
+	if !exists {
 		panic("Error: Environment variable 'OLLAMA_URL' not set.")
 	}
 
-	imgUrl := os.Getenv("STABLE_URL")
-	if imgUrl == "" {
+	imgUrl, exists := os.LookupEnv("STABLE_URL")
+	if !exists {
 		panic("Error: Environment variable 'STABLE_URL' not set.")
 	}
 
