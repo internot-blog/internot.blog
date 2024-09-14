@@ -25,15 +25,23 @@ func genFrontMatter(resp string) string {
 	var title string
 	var desc string
 	lines := strings.Split(resp, "\n")
-	for i, line := range lines {
-		trimmedLine := strings.TrimSpace(line)
-		if len(trimmedLine) > 0 {
-			title = trimmedLine
-			if len(lines) > i {
-				desc = strings.TrimSpace(lines[i])
-			}
-			break
+	for _, line := range lines {
+		trimmedLine := strings.Trim(line, " #\"'")
+		if len(trimmedLine) == 0 {
+			continue
 		}
+
+		parts := strings.FieldsFunc(trimmedLine, func(r rune) bool {
+			// TEST: make sure these are the best chars to split on (;,?)
+			return strings.ContainsRune(".:", r)
+		})
+
+		title = parts[0]
+		if len(parts) > 1 {
+			desc = strings.TrimSpace(parts[1])
+		}
+
+		break
 	}
 
 	keywords := FindNGrams(resp)
@@ -64,6 +72,8 @@ func genFrontMatter(resp string) string {
 // TODO: do any other required post-processing here
 func FormtTextResponse(resp string) string {
 	frontMatter := genFrontMatter(resp)
+
+	// TODO: remove the first line (its used as the header)
 
 	return fmt.Sprintf("%s\n%s", frontMatter, resp)
 }

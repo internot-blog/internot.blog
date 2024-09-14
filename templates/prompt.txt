@@ -1,3 +1,2 @@
-Write me a comedic, hypothetical, and satirical blog post about the fictional scenario in which {{ .PromptSubject }} {{ .PromptAction }}.
-The post should use markdown format with level 2 and 3 headers, and the first line should be a short catchy title with no markdown header tags. The next line should be a short description elaborating on the title.
+Write me a comedic, hypothetical, and satirical blog post about the fictional scenario in which {{ .PromptSubject }} {{ .PromptAction }}. The first line should be a short catchy title, followed by a ":" and a short description elaborating on the title (Do not write "title:", this will break my post-processing). The blog post should use markdown format with level 2 (##) and 3 (###) headers to separate paragraphs/sections.
 Do not mention anywhere that this article is comedic, hypothetical, satirical, or fictional.

@@ -1,10 +1,26 @@
 package internal
 
 import (
+	"slices"
 	"sort"
 	"strings"
 	"unicode"
 )
+
+var stopwords = []string{
+	"a", "an", "and", "are", "as", "at", "be", "by", "for", "from", "has",
+	"have", "had", "he", "her", "here", "hers", "herself", "him", "himself",
+	"his", "how", "i", "if", "in", "into", "it", "its", "itself", "just",
+	"like", "me", "might", "more", "most", "must", "my", "myself", "no",
+	"not", "now", "of", "off", "on", "once", "only", "or", "other", "our",
+	"ours", "ourselves", "out", "over", "own", "re", "s", "same", "she",
+	"should", "so", "some", "such", "t", "than", "that", "the", "their",
+	"theirs", "them", "themselves", "then", "there", "these", "they",
+	"this", "those", "through", "to", "too", "under", "until", "up", "ve",
+	"very", "was", "wasn", "we", "were", "what", "when", "where", "which",
+	"while", "who", "whom", "why", "will", "with", "won", "would", "y",
+	"you", "your", "yours", "yourself", "yourselves",
+}
 
 func tokenize(text string) []string {
 	text = strings.ToLower(text)
@@ -44,7 +60,7 @@ func countNGrams(ngrams []string) map[string]int {
 func filterTopNGrams(frequencyMap map[string]int, threshold int, k int) []string {
 	filteredMap := make(map[string]int)
 	for ngram, count := range frequencyMap {
-		if count >= threshold {
+		if count >= threshold && !slices.Contains(stopwords, ngram) {
 			filteredMap[ngram] = count
 		}
 	}
