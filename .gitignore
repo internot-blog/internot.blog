@@ -24,3 +24,5 @@ go.work.sum
 # env file
 .env
 vars.sh
+
+generated_image.png
