@@ -24,7 +24,11 @@ func MakePost(cfg internal.Config) (string, error) {
 	}
 
 	seed := rand.Int63()
-	err = MakeImage(cfg, fmt.Sprintf("%s/image.%d.png", postDir, seed), prompt, seed)
+	width := 512
+	height := 512
+	steps := 10
+
+	err = MakeImage(cfg, fmt.Sprintf("%s/image.%d.png", postDir, seed), prompt, seed, width, height, steps)
 	if err != nil {
 		return "", err
 	}
@@ -34,8 +38,12 @@ func MakePost(cfg internal.Config) (string, error) {
 	return postDir, nil
 }
 
+func MakeAd(cfg internal.Config) error {
+	return nil
+}
+
 func MakeText(cfg internal.Config, textFilename string, prompt string) error {
-	fmt.Println("Prompt:", prompt)
+	fmt.Println("Text prompt:", prompt)
 
 	response, err := internal.GenText(cfg, prompt)
 	if err != nil {
@@ -50,11 +58,14 @@ func MakeText(cfg internal.Config, textFilename string, prompt string) error {
 	return nil
 }
 
-func MakeImage(cfg internal.Config, imageFilename string, prompt string, seed int64) error {
-	width := 512
-	height := 512
-	steps := 10
+func MakeImage(cfg internal.Config, imageFilename string, prompt string, seed int64, width int, height int, steps int) error {
 	guidance := 7.5
+
+	fmt.Printf("Image prompt: %s\n", prompt)
+	fmt.Printf("Seed: %d\n", seed)
+	fmt.Printf("Width: %d\n", width)
+	fmt.Printf("Height: %d\n", height)
+	fmt.Printf("Steps: %d\n", steps)
 
 	imageData, err := internal.GenImage(cfg, prompt, seed, width, height, steps, guidance)
 	if err != nil {
@@ -73,9 +84,13 @@ func MakeLogos(cfg internal.Config, prompt string) error {
 		return err
 	}
 
+	width := 512
+	height := 512
+	steps := 10
+
 	for i := 0; i < 100; i++ {
 		seed := rand.Int63()
-		err = MakeImage(cfg, fmt.Sprintf("logos/%d.png", seed), prompt, seed)
+		err = MakeImage(cfg, fmt.Sprintf("logos/%d.png", seed), prompt, seed, width, height, steps)
 		if err != nil {
 			return err
 		}
