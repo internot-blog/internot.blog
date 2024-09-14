@@ -7,8 +7,7 @@ import (
 )
 
 func main() {
-	promptConfig := internal.ReadPromptFile("./proompt.json")
-	_ = promptConfig
+	cfg := internal.GetConfig("./proompt.json")
 
-	fmt.Println("")
+	fmt.Println(internal.GenTextPrompt(cfg))
 }
