@@ -17,23 +17,24 @@ func MakeText(cfg internal.Config, textFilename string, prompt string) {
 		return
 	}
 
-	fmt.Println(response)
 	internal.SaveText(response, textFilename)
+	fmt.Println(response)
 }
 
-func MakeImage(cfg internal.Config, imageFilename string, prompt string) {
+func MakeImage(cfg internal.Config, imageFilename string, prompt string, seed int64) {
 	width := 512
 	height := 512
 	steps := 10
 	guidance := 7.5
 
-	imageData, err := internal.GenImage(cfg, prompt, width, height, steps, guidance)
+	imageData, err := internal.GenImage(cfg, prompt, seed, width, height, steps, guidance)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
 
 	internal.SaveImage(imageData, imageFilename)
+	fmt.Println("Image saved.")
 }
 
 func MakeLogos(cfg internal.Config, prompt string) {
@@ -45,7 +46,7 @@ func MakeLogos(cfg internal.Config, prompt string) {
 
 	for i := 0; i < 100; i++ {
 		seed := rand.Int63()
-		MakeImage(cfg, fmt.Sprintf("logos/%d.png", seed), prompt)
+		MakeImage(cfg, fmt.Sprintf("logos/%d.png", seed), prompt, seed)
 	}
 }
 
@@ -68,7 +69,8 @@ func main() {
 
 	prompt := internal.GenTextPrompt(cfg)
 	MakeText(cfg, postDir+"/post.md", prompt)
-	MakeImage(cfg, postDir+"/image.png", prompt)
+	seed := rand.Int63()
+	MakeImage(cfg, fmt.Sprintf("%s/image.%d.png", postDir, seed), prompt, seed)
 
 	// Site logo generator
 

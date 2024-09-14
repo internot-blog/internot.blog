@@ -18,6 +18,7 @@ type modelInputs struct {
 	GuidanceScale     float64 `json:"guidance_scale"`
 	Width             int     `json:"width"`
 	Height            int     `json:"height"`
+	Seed              int64   `json:"seed"`
 }
 
 // Struct to represent call inputs for the image generation request
@@ -62,7 +63,7 @@ type textResponse struct {
 }
 
 // TODO:
-func GenImage(config Config, prompt string, width int, height int, steps int, guidance float64) ([]byte, error) {
+func GenImage(config Config, prompt string, seed int64, width int, height int, steps int, guidance float64) ([]byte, error) {
 	// Prepare the payload
 	payload := imagePayload{
 		ModelInputs: modelInputs{
@@ -71,6 +72,7 @@ func GenImage(config Config, prompt string, width int, height int, steps int, gu
 			GuidanceScale:     guidance,
 			Width:             width,
 			Height:            height,
+			Seed:              seed,
 		},
 		CallInputs: callInputs{
 			ModelID:       "stabilityai/stable-diffusion-2",
@@ -133,7 +135,7 @@ func GenImage(config Config, prompt string, width int, height int, steps int, gu
 // TODO:
 func GenText(config Config, prompt string) (string, error) {
 	payload := textPayload{
-		Model: "llama3.1:8b",
+		Model: "CognitiveComputations/dolphin-llama3.1:8b",
 		Messages: []message{
 			{
 				Role:    "user",
