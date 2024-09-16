@@ -56,11 +56,9 @@ func main() {
 		}
 	default:
 		// Create a post (directory with markdown and image files)
-		for {
-			_, err := pkg.MakePost(cfg)
-			if err != nil {
-				panic(err)
-			}
+		_, err := pkg.MakePost(cfg)
+		if err != nil {
+			panic(err)
 		}
 	}
 }
